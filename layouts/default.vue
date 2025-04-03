@@ -1,0 +1,4 @@
+<template>
+  <HomeNavBar />
+  <slot />
+</template>
