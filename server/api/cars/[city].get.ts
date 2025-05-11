@@ -1,24 +1,32 @@
 // import cars from "@/data/cars.json";
-import { serverSupabaseClient } from '#supabase/server'
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient();
 export default defineEventHandler(async (event) => {
-  const client = await serverSupabaseClient(event);
-  // const { data, error } = await client.auth.getUser();
-  // if (error || !data.user) { 
-  //   return {
-  //     statusCode: 401,
-  //     message: "User is not authenticated",
-  //   }
-  // }
+  const { city } = event.context.params as { city: string };
+  const { make, minPrice, maxPrice } = getQuery(event);
+  const query: {
+    city: string;
+    make?: string;
+    price?: any;
+  } = {
+    city: city,
+  };
+  if(make) query.make = String(make);
+  if(minPrice && maxPrice) query.price = {
+    gte: +minPrice,
+    lte: +maxPrice,
+  };
+  else if (minPrice && !maxPrice) query.price = {
+    gte: +minPrice,
+  };
+  else if (maxPrice && !minPrice) query.price = {
+    lte: +maxPrice,
+  };
   const listings = prisma.listing.findMany({
-    where: {
-      city: event.context.params?.city,
-    }
+    where: query
   });
   
-  // const { city } = event.context.params as { city: string };
-  // const { make, minPrice, maxPrice } = getQuery(event);
+
   // const filteredCars = cars.filter((car) => {
   //   if (car.city.toLowerCase() !== city.toLowerCase()) {
   //     return false;
