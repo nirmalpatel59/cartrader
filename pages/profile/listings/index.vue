@@ -3,7 +3,6 @@ definePageMeta({
   layout: "custom",
 });
 
-const { listings } = useCars();
 definePageMeta({
   head: {
     title: "My Listings",
@@ -17,7 +16,7 @@ definePageMeta({
   layout: "custom",
   middleware: ["auth"]
 });
-
+const { listings } = await useCars();
 </script>
 
 <template>

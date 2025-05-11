@@ -1,4 +1,11 @@
 <script setup>
+const props = defineProps({
+  required: {
+    type: Boolean,
+    default: false
+  }
+});
+
 const image = useState("carImage", () => {
   return {
     preview: null,
@@ -6,7 +13,18 @@ const image = useState("carImage", () => {
   };
 });
 
+const error = ref("");
 const emits = defineEmits(["changeInput"]);
+
+const validate = () => {
+  if (props.required && !image.value.image) {
+    error.value = "Image is required";
+    return false;
+  } else {
+    error.value = "";
+    return true;
+  }
+};
 
 const onImageUpload = (event) => {
   const input = event.target;
@@ -17,7 +35,8 @@ const onImageUpload = (event) => {
     };
     image.value.image = input.files[0];
     reader.readAsDataURL(input.files[0]);
-    emits("changeInput", input.files[0], "image");
+    error.value = "";
+    emits("changeInput", input.files[0], "image", true);
   }
 };
 </script>
@@ -28,17 +47,13 @@ const onImageUpload = (event) => {
     <form class="mt-2">
       <div class="form-group">
         <div class="relative">
-          <input
-            type="file"
-            accept="image/*"
-            class="opacity-0 absolute cursor-pointer"
-            @change="onImageUpload"
-          />
+          <input type="file" accept="image/*" class="opacity-0 absolute cursor-pointer" @change="onImageUpload" />
           <span class="cursor-pointer">Browser File</span>
         </div>
         <div class="border p-2 mt-3 w-56" v-if="image.preview">
           <img :src="image.preview" class="img-fluid" />
         </div>
+        <p v-if="error" class="text-red-500 text-xs mt-1">{{ error }}</p>
       </div>
     </form>
   </div>

@@ -5,5 +5,5 @@ export default defineNuxtConfig({
   },
   compatibilityDate: "2025-02-10",
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/image", "@nuxtjs/supabase"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxt/image", "@nuxtjs/supabase", "@prisma/nuxt"],
 });
