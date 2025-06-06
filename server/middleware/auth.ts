@@ -2,11 +2,11 @@ import { serverSupabaseClient } from '#supabase/server'
 
 export default defineEventHandler(async (event) => {
   // Only apply auth to API routes that need protection
-  const protectedRoutes: string[] = [];
-  // const protectedRoutes = [
-  //   '/api/car/create',
-  //   '/api/user'
-  // ];
+  // const protectedRoutes: string[] = [];
+  const protectedRoutes = [
+    '/api/car/create',
+    '/api/user'
+  ];
   
   if (protectedRoutes.some(route => event.node.req.url?.startsWith(route))) {
     const client = await serverSupabaseClient(event);

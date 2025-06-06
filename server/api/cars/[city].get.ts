@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
   else if (maxPrice && !minPrice) query.price = {
     lte: +maxPrice,
   };
-  const listings = prisma.listing.findMany({
+  const listings = await prisma.listing.findMany({
     where: query
   });
   
