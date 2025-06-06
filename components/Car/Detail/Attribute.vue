@@ -21,10 +21,10 @@ const features = computed(() => {
 });
 </script>
 <template>
-  <div class="mr-10 mt-5 border-b pb-5">
-    <div v-for="(feature, index) in features" :key="index" class="flex text-lg mt-2">
-      <p class="rounded text-lime-800 mr-3">✔</p>
-      <p>{{ feature }}</p>
+  <div class="space-y-2">
+    <div v-for="(feature, index) in features" :key="index" class="flex items-center text-sm">
+      <span class="text-green-600 mr-3 text-lg">✓</span>
+      <span class="text-gray-700">{{ feature }}</span>
     </div>
   </div>
 </template>

@@ -18,8 +18,8 @@ interface IProps {
 defineProps<IProps>()
 </script>
 <template>
-  <div class="mt-5">
-    <p class="mb-10">
+  <div>
+    <p class="text-gray-700 leading-relaxed">
       {{ car.description }}
     </p>
   </div>
