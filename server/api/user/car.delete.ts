@@ -1,25 +1,34 @@
-// import cars from "@/data/cars.json";
-// get user's car listings
+// Archive user's car from listings
 import { serverSupabaseClient } from '#supabase/server'
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient();
 export default defineEventHandler(async (event) => {
-  const client = await serverSupabaseClient(event);
-  const { data, error } = await client.auth.getUser();
-  if (error) { 
+  // const client = await serverSupabaseClient(event);
+  // const { data, error } = await client.auth.getUser();
+  // if (error) {
+  //   return {
+  //     statusCode: 404,
+  //     message: "UserId not found",
+  //   }
+  // }
+console.log(event.context);
+  const { listingId } = getQuery(event) // Accesses the 'myParam' query parameter
+  // const { listingId } = event.context.query as { listingId: string }; // Assuming the ID is passed in the URL params
+  if(!listingId || isNaN(+listingId)) {
     return {
-      statusCode: 404,
-      message: "UserId not found",
+      statusCode: 400,
+      message: "Invalid listing ID",
     }
   }
-  // console.log('user data >> ', data);
-  const listings = await prisma.listing.findMany({
+  const listings = await prisma.listing.update({
     where: {
-      userId: data?.user?.id,
-      archive: false
-    }
+      id: +listingId, // Assuming the ID is passed in the URL params
+    },
+    data: {
+      archive: true, // Set the archived field to true
+    },
   });
-    console.log('listings data >> ', listings.length);
+  console.log('archived listing >> ', listings);
   
   // const { city } = event.context.params as { city: string };
   // const { make, minPrice, maxPrice } = getQuery(event);

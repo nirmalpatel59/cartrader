@@ -19,18 +19,18 @@ definePageMeta({
 let listings = ref([]);
 const getCarListingByUser = async () => {
   const { data, error } = await useApi('/user/cars');
-  if (error) {
+  if (error.value) {
     console.error("Failed to fetch listings:", error);
   }
-  return data
+  return data.value || []
 }
-listings = await getCarListingByUser()
+listings.value = await getCarListingByUser()
 </script>
 
 <template>
   <div>
     <div class="flex justify-between mt-24 items-center">
-      <h1 class="text-6xl">My Listingsewr</h1>
+      <h1 class="text-6xl">My Listings</h1>
       <NuxtLink to="/profile/listings/create" class="
           w-9
           h-9

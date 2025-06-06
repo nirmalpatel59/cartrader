@@ -7,8 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ListingStatus {
+  AVAILABLE
+  SOLD
+  PENDING
+}
+
 model Listing {
-  id          Int         @id @default(autoincrement())
+  id          Int              @id @default(autoincrement())
   make        String
   model       String
   year        Int
@@ -20,12 +26,15 @@ model Listing {
   description String
   image       String
   userId      String
-  inquiries   inquiries[]
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  inquiries   sale_inquiries[]
+  sales       vehicle_sales?
+  status      ListingStatus    @default(AVAILABLE)
+  archive     Boolean          @default(false)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 }
 
-model inquiries {
+model sale_inquiries {
   id        Int      @id @default(autoincrement())
   listingId Int
   userId    String?
@@ -35,6 +44,24 @@ model inquiries {
   phone     String?
   price     Int?
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+}
+
+model vehicle_sales {
+  id         Int      @id @default(autoincrement())
+  listingId  Int      @unique
+  paymentId  String?
+  buyerId    String
+  sellerId   String
+  buyerEmail String
+  buyerPhone String
+  buyerName  String?
+  salePrice  Int?
+  saleDate   DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  listing Listing @relation(fields: [listingId], references: [id])
 }

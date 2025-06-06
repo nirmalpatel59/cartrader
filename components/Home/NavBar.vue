@@ -1,13 +1,12 @@
 <script setup lang="ts">
 const supabase = useSupabaseClient()
-const userLoginText = ref('Login');
 const user = useSupabaseUser();
 const route = useRoute();
-if (user.value) {
-  userLoginText.value = 'Logout';
-} else {
-  userLoginText.value = 'Login';
-}
+
+// Computed property for login text that's reactive to user state
+const userLoginText = computed(() => {
+  return user.value ? 'Logout' : 'Login';
+});
 
 // const handleLogin = async () => {
 //   console.log('Login button clicked');
@@ -35,7 +34,6 @@ const handleLogin = async () => {
       console.error('Error signing out:', error);
     } else {
       console.log('Successfully signed out');
-      userLoginText.value = 'Login';
       // navigateTo(currentPath, { replace: true });
       window.location.reload();
     }
@@ -58,8 +56,13 @@ const handleLogin = async () => {
   <header class="sticky top-0 z-50 flex justify-between items-center space-x-1 border-b bg-white p-4 shadow-md">
     <NuxtLink class="text-3xl font-mono" href="/">CarTrader</NuxtLink>
     <nav class="flex space-x-4">
-      <NuxtLink v-if="user" class="text-lg font-mono" href="/profile/listings">My Profile</NuxtLink>
-      <NuxtLink class="text-lg font-mono cursor-pointer" @click="handleLogin">{{ userLoginText }}</NuxtLink>
+      <ClientOnly>
+        <NuxtLink v-if="user" class="text-lg font-mono" href="/profile/listings">My Profile</NuxtLink>
+        <NuxtLink class="text-lg font-mono cursor-pointer" @click="handleLogin">{{ userLoginText }}</NuxtLink>
+        <template #fallback>
+          <NuxtLink class="text-lg font-mono cursor-pointer">Login</NuxtLink>
+        </template>
+      </ClientOnly>
     </nav>
   </header>
 </template>
