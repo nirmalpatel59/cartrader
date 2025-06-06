@@ -2,13 +2,17 @@
 interface IProps {
   car: {
     id: number;
-    name: string;
+    make: string;
+    model: string;
+    city: string;
+    year: number;
     price: string;
-    url: string;
+    image: string;
     seats: number;
     miles: string;
-    features: string[];
+    features: string;
     description: string;
+    userId: string;
   }
 }
 defineProps<IProps>()

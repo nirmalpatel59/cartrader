@@ -7,13 +7,17 @@ definePageMeta({
 })
 interface ICarDetails {
   id: number;
-  name: string;
+  make: string;
+  model: string;
+  city: string;
+  year: number;
   price: string;
-  url: string;
+  image: string;
   seats: number;
   miles: string;
-  features: string[];
+  features: string;
   description: string;
+  userId: string;
 }
 const { data: car } = await useApi<ICarDetails>(`/car/${route.params.id}`);
 console.log('car:', car);

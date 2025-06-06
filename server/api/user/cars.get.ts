@@ -1,19 +1,20 @@
 // import cars from "@/data/cars.json";
+// get user's car listings
 import { serverSupabaseClient } from '#supabase/server'
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient();
 export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event);
   const { data, error } = await client.auth.getUser();
-  if (error || !data.user) { 
+  if (error) { 
     return {
-      statusCode: 401,
-      message: "User is not authenticated",
+      statusCode: 404,
+      message: "UserId not found",
     }
   }
   const listings = prisma.listing.findMany({
     where: {
-      userId: data.user.id,
+      userId: data?.user?.id,
     }
   });
   

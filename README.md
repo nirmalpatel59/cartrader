@@ -75,8 +75,9 @@ bun run preview
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
 
 TODOs:
-Filter reset not working for price and city 
-car detail page is not opening when clicked on the car on city search page
-view car message ( bids ) need to be dynamic
-delete car listing from profile should update in supabase
-introduce pagination on city car search page
+-------
+- ~~Filter reset not working for price and city~~
+- ~~car detail page is not opening when clicked on the car on city search page~~
+- view car message ( bids ) need to be dynamic
+- delete car listing from profile should update in supabase
+- introduce pagination on city car search page

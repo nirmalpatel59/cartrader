@@ -19,7 +19,7 @@ const resetModal = (type: 'location' | 'make' | 'price') => {
   if (type === 'make') {
     selectedMake.value = '';
     makeSearchQuery.value = '';
-    // Remove make from query params
+    // Remove make from query params 
     const newQuery = { ...route.query };
     delete newQuery.make;
     const queryParams = Object.fromEntries(
@@ -30,6 +30,7 @@ const resetModal = (type: 'location' | 'make' | 'price') => {
     city.value = '';
     // Reset to base path without city
     navigateTo('/');
+  } else if (type === 'price') {
     // Remove price params from query
     const newQuery = { ...route.query };
     delete newQuery.minPrice;

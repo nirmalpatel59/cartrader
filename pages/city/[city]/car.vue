@@ -1,6 +1,9 @@
 <script lang="ts" setup>
+import logger from '@milandadhaniya/tiny-logger-js'
 const route = useRoute()
 const title = computed(() => {
+  logger.log({ title: 'Route Params: ', msg: JSON.stringify(route.params) });
+  logger.info({ title: 'Route Query: ', msg: JSON.stringify(route.query) });
   if (route.params.make) return `${(route.params.make as string).toUpperCase()}`
   return `Cars in ${(route.params.city as string).toUpperCase()}`
 })

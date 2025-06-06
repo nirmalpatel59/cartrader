@@ -156,7 +156,6 @@ const inputs = [
 ];
 </script>
 
-
 <template>
   <div>
     <div class="mt-24">

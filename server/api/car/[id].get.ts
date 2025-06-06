@@ -1,5 +1,7 @@
-import cars from '../../../data/cars.json';
-export default defineEventHandler((event) => {
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient();
+export default defineEventHandler(async (event) => {
   const params = event.context.params || {};
   const id = params.id;
   if (!id) {
@@ -8,7 +10,11 @@ export default defineEventHandler((event) => {
       statusMessage: 'Invalid car Id',
     });
   }
-  
-  const car = cars.find((car) => car.id === +id);
+  const car = await prisma.listing.findUnique({
+    where: {
+      id: +id,
+    }
+  });
+  console.log('listingData >> ', car);
   return car;
 });

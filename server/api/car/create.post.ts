@@ -5,21 +5,16 @@ const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event);
-  const { data, error } = await client.auth.getUser();
-  
-  if (error || !data.user) { 
-    return {
-      statusCode: 401,
-      message: "User is not authenticated",
-    }
-  }
+  const { data } = await client.auth.getUser();
+
   
   try {
     const body = await readBody(event);
+    console.log('create listing body >> ', body);
     const listing = await prisma.listing.create({
       data: {
         ...body,
-        userId: data.user.id,
+        userId: data?.user?.id || body.userId, // Use userId from Supabase or from body if available
       },
     });
     
