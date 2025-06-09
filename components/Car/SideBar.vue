@@ -25,7 +25,7 @@ const resetModal = (type: 'location' | 'make' | 'price') => {
     const queryParams = Object.fromEntries(
       Object.entries(newQuery).map(([key, value]) => [key, String(value)])
     );
-    navigateTo(`/city/${city.value}/car${Object.keys(queryParams).length ? '?' + new URLSearchParams(queryParams).toString() : ''}`);
+    navigateTo(`/city/${city.value}/cars${Object.keys(queryParams).length ? '?' + new URLSearchParams(queryParams).toString() : ''}`);
   } else if (type === 'location') {
     city.value = '';
     // Reset to base path without city
@@ -38,13 +38,13 @@ const resetModal = (type: 'location' | 'make' | 'price') => {
     const queryParams = Object.fromEntries(
       Object.entries(newQuery).map(([key, value]) => [key, String(value)])
     );
-    navigateTo(`/city/${city.value}/car${Object.keys(queryParams).length ? '?' + new URLSearchParams(queryParams).toString() : ''}`);
+    navigateTo(`/city/${city.value}/cars${Object.keys(queryParams).length ? '?' + new URLSearchParams(queryParams).toString() : ''}`);
     delete newQuery.minPrice;
     delete newQuery.maxPrice;
     const convertedQuery = Object.fromEntries(
       Object.entries(newQuery).map(([key, value]) => [key, String(value)])
     );
-    navigateTo(`/city/${city.value}/car${Object.keys(convertedQuery).length ? '?' + new URLSearchParams(convertedQuery).toString() : ''}`);
+    navigateTo(`/city/${city.value}/cars${Object.keys(convertedQuery).length ? '?' + new URLSearchParams(convertedQuery).toString() : ''}`);
   }
 };
 
@@ -72,7 +72,7 @@ const updateRoute = () => {
     Object.entries(route.query).map(([key, value]) => [key, String(value)])
   );
   updateModal('location');
-  navigateTo(`/city/${city.value}/car?${new URLSearchParams(routeQuery).toString()}`)
+  navigateTo(`/city/${city.value}/cars?${new URLSearchParams(routeQuery).toString()}`)
 }
 const applyMakeFilter = (make: string) => {
   selectedMake.value = make;
@@ -83,7 +83,7 @@ const applyMakeFilter = (make: string) => {
     make: selectedMake.value,
   };
 
-  navigateTo(`/city/${city.value}/car?${new URLSearchParams(routeQuery).toString()}`);
+  navigateTo(`/city/${city.value}/cars?${new URLSearchParams(routeQuery).toString()}`);
 };
 const applyPriceFilter = () => {
   if (!selectedMinPrice.value || !selectedMaxPrice.value) return;
@@ -93,8 +93,8 @@ const applyPriceFilter = () => {
     minPrice: selectedMinPrice.value,
     maxPrice: selectedMaxPrice.value,
   };
-  navigateTo(`/city/${city.value}/car?${new URLSearchParams(routeQuery).toString()}`);
-  // navigateTo(`/city/${city.value}/car/?minPrice=${selectedMinPrice.value}&maxPrice=${selectedMaxPrice.value}`);
+  navigateTo(`/city/${city.value}/cars?${new URLSearchParams(routeQuery).toString()}`);
+  // navigateTo(`/city/${city.value}/cars/?minPrice=${selectedMinPrice.value}&maxPrice=${selectedMaxPrice.value}`);
 };
 </script>
 <template>

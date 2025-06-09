@@ -7,11 +7,16 @@ export default defineEventHandler(async (event) => {
   const { city } = event.context.params as { city: string };
   const { make, minPrice, maxPrice } = getQuery(event);
   const query: {
-    city: string;
+    city: object;
     make?: string;
     price?: any;
+    archive: boolean;
   } = {
-    city: city,
+    archive: false,
+    city: {
+      equals: city, // Assuming you want to filter out archived listings
+      mode: 'insensitive' // Case insensitive search for city
+    }
   };
   if(make) query.make = String(make);
   if(minPrice && maxPrice) query.price = {
@@ -24,6 +29,7 @@ export default defineEventHandler(async (event) => {
   else if (maxPrice && !minPrice) query.price = {
     lte: +maxPrice,
   };
+  console.log('query >> ', query);
   const listings = await prisma.listing.findMany({
     where: query
   });

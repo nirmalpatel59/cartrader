@@ -47,8 +47,6 @@ onMounted(() => {
   watch(
     () => route.query,
     async (newQuery, oldQuery) => {
-      console.log('newQuery:', newQuery);
-      console.log('oldQuery:', oldQuery);
       cars.value = await getCarsClient() || null
       // window.location.reload();
     }

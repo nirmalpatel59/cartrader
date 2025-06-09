@@ -2,7 +2,7 @@
 const city = ref('');
 const goToCar = () => {
   if (city.value) {
-    navigateTo(`/city/${city.value}/car`);
+    navigateTo(`/city/${city.value}/cars`);
   }
 };
 </script>

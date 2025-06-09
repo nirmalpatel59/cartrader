@@ -2,7 +2,6 @@
   <div class="flex items-center justify-center h-screen bg-gray-100">
     <div class="w-full max-w-md p-8 bg-white rounded shadow">
       <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
-      {{ user }}
       <form>
         <div class="mb-4">
           <!-- <label for="email" class="block text-sm font-medium text-gray-700">Email</label> -->
