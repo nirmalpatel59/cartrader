@@ -26,29 +26,18 @@ const userLoginText = computed(() => {
 
 
 const handleLogin = async () => {
-  const currentPath = route.fullPath;
-  console.log('route path final :', currentPath);
   if (user.value) {
     const { error } = await supabase.auth.signOut();
     if (error) {
       console.error('Error signing out:', error);
     } else {
       console.log('Successfully signed out');
-      // navigateTo(currentPath, { replace: true });
       window.location.reload();
     }
   } else {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `http://localhost:3000${currentPath}`,
-      },
-    });
-    if (error) {
-      console.error('Error signing in:', error);
-    } else {
-      console.log('Successfully signed in:', data);
-    }
+    // Navigate to sign-in page with current path as redirect parameter
+    const currentPath = route.fullPath;
+    await navigateTo(`/signin?redirect=${encodeURIComponent(currentPath)}`);
   }
 };
 </script>
