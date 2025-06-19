@@ -11,10 +11,15 @@ export default defineEventHandler(async (event) => {
     });
   }
   const car = await prisma.listing.findUnique({
+    include: {
+      // Replace with a valid relation field from your Listing model
+      // For example, if you have a 'messages' relation:
+      inquiries: true,
+    },
     where: {
       id: +id,
     }
   });
-  console.log('listingData >> ', car);
+  // console.log('listingData >> ', car);
   return car;
 });

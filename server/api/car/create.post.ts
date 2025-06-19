@@ -4,20 +4,20 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
-  const client = await serverSupabaseClient(event);
-  const { data } = await client.auth.getUser();
+  // const client = await serverSupabaseClient(event);
+  // const { data } = await client.auth.getUser();
 
-  
+  const userId = event.context.user?.id;
   try {
     const body = await readBody(event);
     console.log('create listing body >> ', body);
     const listing = await prisma.listing.create({
       data: {
         ...body,
-        userId: data?.user?.id || body.userId, // Use userId from Supabase or from body if available
+        userId: userId || body.userId, // Use userId from Supabase or from body if available
       },
     });
-    
+
     return {
       statusCode: 200,
       body: listing

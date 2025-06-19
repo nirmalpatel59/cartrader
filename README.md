@@ -76,8 +76,8 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 
 TODOs:
 -------
-- ~~Filter reset not working for price and city~~
-- ~~car detail page is not opening when clicked on the car on city search page~~
-- view car message ( bids ) need to be dynamic
-- delete car listing from profile should update in supabase
-- introduce pagination on city car search page
+- Car sale_inquiry added, make it more dynamic with allowing user to discuss back and forth in the same thread.
+- Create a modal for signin. and create a auth wall on certain features, Like contact seller, add to favorite etc. once you click on this should open the sign in modal, once signin is completed, automatically the initial action should continue. 
+- introduce pagination on city car search page & on sale inquiry section.
+- Reuse the code for sale inquiries for my listing car as well.
+- Restructure the folder for create inquiry api. 

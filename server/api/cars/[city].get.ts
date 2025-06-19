@@ -1,7 +1,7 @@
 // import cars from "@/data/cars.json";
 // get car listing by city
 // optional filters: make, minPrice, maxPrice
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 export default defineEventHandler(async (event) => {
   const { city } = event.context.params as { city: string };
@@ -11,6 +11,7 @@ export default defineEventHandler(async (event) => {
     make?: string;
     price?: any;
     archive: boolean;
+    userId?: object; // Optional userId for filtering by user
   } = {
     archive: false,
     city: {
@@ -18,8 +19,8 @@ export default defineEventHandler(async (event) => {
       mode: 'insensitive' // Case insensitive search for city
     }
   };
-  if(make) query.make = String(make);
-  if(minPrice && maxPrice) query.price = {
+  if (make) query.make = String(make);
+  if (minPrice && maxPrice) query.price = {
     gte: +minPrice,
     lte: +maxPrice,
   };
@@ -29,11 +30,16 @@ export default defineEventHandler(async (event) => {
   else if (maxPrice && !minPrice) query.price = {
     lte: +maxPrice,
   };
-  console.log('query >> ', query);
+  if (event.context.user) {
+    query.userId = {
+      not: event.context.user.id, // Assuming you want to filter by user ID
+    }; // Assuming you want to filter by user ID
+  }
+  // console.log("Query:", query);
   const listings = await prisma.listing.findMany({
     where: query
   });
-  
+
 
   // const filteredCars = cars.filter((car) => {
   //   if (car.city.toLowerCase() !== city.toLowerCase()) {

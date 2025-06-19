@@ -19,8 +19,9 @@ interface ICarDetails {
   description: string;
   userId: string;
 }
-const { data: car } = await useApi<ICarDetails>(`/car/${route.params.id}`);
-console.log('car:', car);
+const carId = route.params.id as string;
+const { data: car } = await useApi<ICarDetails>(`/car/${carId}`);
+// console.log('car:', car);
 if (!car.value) {
   throw createError({
     statusCode: 424,
@@ -69,7 +70,13 @@ if (!car.value) {
     <!-- Contact Form Below -->
     <div class="border-t pt-8">
       <h2 class="text-2xl font-bold mb-6">Contact Seller</h2>
-      <CarDetailContact />
+      <CarDetailContact :id="carId" />
+    </div>
+
+    <!-- Inquiry History Section -->
+    <div class="border-t pt-8 mt-8">
+      <h2 class="text-2xl font-bold mb-6">Your Inquiries for this Car</h2>
+      <CarDetailInquiryHistory :carId="carId" />
     </div>
   </div>
   <div v-else>
