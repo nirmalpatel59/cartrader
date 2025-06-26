@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   },
   compatibilityDate: "2025-02-10",
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/image", "@nuxtjs/supabase", "@prisma/nuxt"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxt/image", "@nuxtjs/supabase", "@prisma/nuxt", "@nuxthub/core"],
   runtimeConfig: {
     public: {
       supabaseUrl: process.env.SUPABASE_URL || "https://jmkskegtuhgpubyncnca.supabase.co",
